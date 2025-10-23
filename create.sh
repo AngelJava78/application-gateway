@@ -15,7 +15,7 @@ nsgName="nsg-$project-$env-$region"
 vmName="vm-$project-$env-$region-01"
 adminUser="angeladmin"
 image="Canonical:0001-com-ubuntu-server-jammy:24_04-lts-gen2:latest"
-size="Standard_B2s"
+size="Standard_D2s_v3"
 
 # Crear grupo de recursos
 az group create --location $location --name $rgName
