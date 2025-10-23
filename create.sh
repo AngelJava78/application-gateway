@@ -191,7 +191,7 @@ echo "✅ Verificación de Apache completada."
 echo "⏳ Esperando 15 segundos antes de finalizar..."
 sleep 15
 
-dnsLabel="$vmName-dns"  # Puedes personalizar este nombre
+dnsLabel="$vmName"  # Puedes personalizar este nombre
 echo "🌐 Asignando nombre DNS público: $dnsLabel..."
 az network public-ip update \
   --resource-group $rgName \
