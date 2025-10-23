@@ -186,6 +186,11 @@ ssh $adminUser@$publicIp << 'EOF'
 EOF
 echo "✅ Verificación de Apache completada."
 
+
+# Pausa de 15 segundos
+echo "⏳ Esperando 15 segundos antes de finalizar..."
+sleep 15
+
 dnsLabel="$vmName-dns"  # Puedes personalizar este nombre
 echo "🌐 Asignando nombre DNS público: $dnsLabel..."
 az network public-ip update \
