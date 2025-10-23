@@ -17,7 +17,7 @@ back_snet_address="10.10.2.0/24"
 nsgName="nsg-$project-$env-$region"
 vmName="vm-$project-$env-$region-01"
 adminUser="angeladmin"
-image="Canonical:0001-com-ubuntu-server-jammy:24_04-lts-gen2:latest"
+image="Canonical:ubuntu-24_04-lts:server:latest"
 size="Standard_D2s_v3"
 
 # Crear grupo de recursos
