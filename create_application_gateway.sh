@@ -29,10 +29,6 @@ az network application-gateway create \
   --subnet $frontSubnetName \
   --capacity 2 \
   --sku Standard_v2 \
-  --frontend-port 80 \
-  --http-settings-cookie-based-affinity Disabled \
-  --http-settings-port 80 \
-  --http-settings-protocol Http \
   --public-ip-address $pipAg
 
 # Crear backend pool con IP privada de la VM
