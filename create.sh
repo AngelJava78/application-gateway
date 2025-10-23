@@ -171,3 +171,27 @@ ssh $adminUser@$publicIp << 'EOF'
   sudo chmod 644 /var/www/html/index.html
   echo "✅ Archivo index.html actualizado correctamente."
 EOF
+
+# Verificar que Apache esté corriendo y sirviendo el archivo index.html
+echo "🔍 Verificando que Apache esté corriendo correctamente en la VM..."
+ssh $adminUser@$publicIp << 'EOF'
+  echo "📦 Estado del servicio Apache:"
+  sudo systemctl status apache2 | grep Active
+
+  echo "🌐 Probando acceso local a Apache con curl..."
+  curl -I http://localhost | grep "HTTP"
+
+  echo "🧪 Verificando contenido de index.html..."
+  curl -s http://localhost | head -n 10
+EOF
+echo "✅ Verificación de Apache completada."
+
+dnsLabel="$vmName-dns"  # Puedes personalizar este nombre
+echo "🌐 Asignando nombre DNS público: $dnsLabel..."
+az network public-ip update \
+  --resource-group $rgName \
+  --name $publicIpName \
+  --dns-name $dnsLabel
+echo "✅ DNS asignado: http://$dnsLabel.$location.cloudapp.azure.com"
+echo "🌐 Accede a la página principal de Apache en:"
+echo "👉 http://$dnsLabel.$location.cloudapp.azure.com"
