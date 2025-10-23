@@ -1,5 +1,5 @@
 variable "project" {
-  default     = "mp"
+  default     = "cf"
   description = "Short name of the project or system to which the deployed resources belong."
 }
 
