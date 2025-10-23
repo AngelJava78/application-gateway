@@ -1,0 +1,8 @@
+apgw-vms/.terraform.lock.hcl
+apgw-vms/.terraform.tfstate.lock.info
+apgw-vms/main.tfplan
+apgw-vms/terraform.tfstate
+apgw-vms/.terraform/providers/registry.terraform.io/hashicorp/azurerm/4.47.0/windows_386/LICENSE.txt
+apgw-vms/.terraform/providers/registry.terraform.io/hashicorp/azurerm/4.47.0/windows_386/terraform-provider-azurerm_v4.47.0_x5.exe
+apgw-vms/.terraform/providers/registry.terraform.io/hashicorp/random/3.7.2/windows_386/LICENSE.txt
+apgw-vms/.terraform/providers/registry.terraform.io/hashicorp/random/3.7.2/windows_386/terraform-provider-random_v3.7.2_x5.exe
