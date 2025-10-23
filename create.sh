@@ -6,6 +6,8 @@ region="mx"
 project="cf"
 env="dev"
 rgName="rg-$project-$env-$region"
+echo "🔧 Para usar esta variable en tu sesión actual, ejecuta:"
+echo "export rgName=$rgName"
 vnetName="vnet-$project-$env-$region"
 frontSubnetName="snet-front-$project-$env-$region"
 backSubnetName="snet-back-$project-$env-$region"
@@ -123,3 +125,49 @@ az vm create \
   --vnet-name $vnetName \
   --subnet $backSubnetName
 echo "✅ Máquina virtual $vmName creada exitosamente."
+
+# Obtener la IP pública de la VM
+echo "🌐 Obteniendo la IP pública de la máquina virtual $vmName..."
+publicIp=$(az vm show \
+  --resource-group $rgName \
+  --name $vmName \
+  --show-details \
+  --query publicIps \
+  --output tsv)
+echo "✅ IP pública obtenida: $publicIp"
+
+# Esperar unos segundos para asegurar que la VM esté lista
+echo "⏳ Esperando 30 segundos para que la VM esté lista..."
+sleep 30
+
+# Conectarse a la VM e instalar Apache
+echo "🔧 Conectándose a la VM y realizando instalación de Apache..."
+ssh -o StrictHostKeyChecking=no $adminUser@$publicIp << 'EOF'
+  echo "📦 Actualizando paquetes del sistema..."
+  sudo apt update -y
+
+  echo "🌐 Instalando Apache..."
+  sudo apt install apache2 -y
+
+  echo "🚀 Habilitando e iniciando el servicio Apache..."
+  sudo systemctl enable apache2
+  sudo systemctl start apache2
+
+  echo "✅ Apache instalado y en ejecución."
+EOF
+
+
+# Subir archivo index.html a la VM
+echo "📤 Subiendo archivo local index.html a la máquina virtual..."
+scp -o StrictHostKeyChecking=no ./index.html $adminUser@$publicIp:/tmp/index.html
+echo "✅ Archivo index.html subido a /tmp en la VM."
+
+# Reemplazar el archivo index.html en Apache
+echo "📝 Reemplazando el archivo index.html predeterminado de Apache..."
+ssh $adminUser@$publicIp << 'EOF'
+  echo "📁 Moviendo el nuevo index.html a /var/www/html/..."
+  sudo mv /tmp/index.html /var/www/html/index.html
+  sudo chown www-data:www-data /var/www/html/index.html
+  sudo chmod 644 /var/www/html/index.html
+  echo "✅ Archivo index.html actualizado correctamente."
+EOF
