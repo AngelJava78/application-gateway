@@ -94,13 +94,13 @@ resource "azurerm_application_gateway" "main" {
   }
 
   backend_http_settings {
-    name                                = "httpSettings"
-    cookie_based_affinity               = "Disabled"
-    port                                = 80
-    protocol                            = "Http"
-    request_timeout                     = 60
-    host_name                           = azurerm_windows_web_app.web_app.default_hostname
-    pick_host_name_from_backend_address = true
+    name                  = "httpSettings"
+    cookie_based_affinity = "Disabled"
+    port                  = 80
+    protocol              = "Http"
+    request_timeout       = 60
+    host_name             = azurerm_windows_web_app.web_app.default_hostname
+    #pick_host_name_from_backend_address = true
   }
 
   http_listener {
